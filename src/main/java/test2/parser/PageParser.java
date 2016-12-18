@@ -11,8 +11,10 @@ import test2.domain.FuelType;
 import test2.domain.Transmission;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static java.lang.Long.parseLong;
 
@@ -48,7 +50,7 @@ public class PageParser {
         FuelType fuelType = null;
 
         Constants co = new Constants();
-        List<String> res = co.autoProducers.stream().map(s -> s.trim()).collect(Collectors.toList());
+        List<String> res = Stream.of(co.autoProducers).map(String::trim).collect(Collectors.toList());
 
         Double engineCapacity= null;
         if(!"Не указано".equals(engine)) {
