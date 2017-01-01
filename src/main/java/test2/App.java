@@ -9,6 +9,7 @@ import test2.domain.Auto;
 import test2.parser.AutoParser;
 import test2.parser.PageParser;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -17,9 +18,11 @@ import java.util.List;
  */
 public class App 
 {
+
+    private Integer maxPageCount = 10;
+
     public static void main( String[] args )
     {
-        System.out.println( "Hello World!" );
         App a = new App();
         a.doSomething();
     }
@@ -27,15 +30,18 @@ public class App
     @SneakyThrows
     private void doSomething() {
 
-        Document doc = Jsoup.connect("https://auto.ria.com/legkovie/?page=35").get();
-
-        //Element element = doc.select("#mp-itn b a").get(1);
-
-        AutoParser ap = new AutoParser();
-        //Auto a = ap.parse(element);
-
         PageParser pp = new PageParser();
-        List<Auto> ao = pp.parse(doc);
+        List<Auto> ao = new ArrayList<>();
+        for (int i = 0 ; i < maxPageCount; ++i) {
+
+
+            Document doc = Jsoup.connect("https://auto.ria.com/legkovie/?page=" + i).get();
+
+
+           ao.addAll( pp.parse(doc));
+        }
+
+        System.out.println("done");
 
     }
 }
